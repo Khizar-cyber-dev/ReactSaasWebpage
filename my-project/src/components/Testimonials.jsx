@@ -1,0 +1,69 @@
+import React from 'react'
+import { motion } from 'framer-motion'
+import { TESTIMONIALS_CONTENT } from '../constants'
+
+const Testimonials = () => {
+    const testimonialsVariants = {
+        hidden: { opacity: 0 , y: 50},
+        visible: {
+            opacity:1,
+            y: 0,
+            transition: {
+                delay: 1 *0.2,
+                duration: 0.6,
+                ease: "easeOut"
+            }
+        }
+     }
+  return (
+    <section id="testimonials">
+      <div className="max-w-7xl mx-auto px-4 mt-20 border-t border-neutral-800">
+        <motion.div
+          className="text-center mb-12 border-t border-neutral-800"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <h2 className="text-3xl lg:text-5xl mt-20 tracking-tighter bg-gradient-to-t from-neutral-50 via-neutral-300 to-neutral-600 bg-clip-text text-transparent">
+            {TESTIMONIALS_CONTENT.sectionTitle}
+          </h2>
+          <p className="mt-4">{TESTIMONIALS_CONTENT.sectionDescription}</p>
+        </motion.div>
+
+        <motion.div
+  className="grid grid-cols-1 md:grid-cols-3 gap-3"
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, amount: 0.1 }}
+  variants={{
+    visible: {
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  }}
+>
+  {TESTIMONIALS_CONTENT.reviews.map((review, index) => (
+    <motion.div
+      key={index}
+      custom={index}
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="mt-10 flex flex-col items-center justify-center overflow-hidden rounded-2xl bg-neutral-900/50 border border-neutral-900 p-10"
+    >
+      {/* Render specific properties of the review object */}
+      <img src={review.image} alt={review.name} className="mb-4 rounded-full w-20 h-20" />
+      <h3 className="text-lg font-semibold text-neutral-200">{review.name}</h3>
+      <p className="text-sm text-neutral-400">{review.title}</p>
+      <p className="mt-4 text-neutral-200">{review.review}</p>
+    </motion.div>
+  ))}
+</motion.div>
+
+      </div>
+    </section>
+  )
+}
+
+export default Testimonials
